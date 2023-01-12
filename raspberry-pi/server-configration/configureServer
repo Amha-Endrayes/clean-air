@@ -1,0 +1,49 @@
+#!/bin/bash
+
+# Update packages and install dependencies
+sudo apt-get update
+sudo apt-get install -y mosquitto mosquitto-clients grafana influxdb
+
+# Start and enable InfluxDB
+sudo systemctl start influxdb
+sudo systemctl enable influxdb
+
+# Create a new database for Grafana
+curl -XPOST "http://localhost:8086/query" --data-urlencode "q=CREATE DATABASE mydb"
+
+# Start and enable Mosquitto
+sudo systemctl start mosquitto
+sudo systemctl enable mosquitto
+
+# Start and enable Grafana
+sudo systemctl start grafana-server
+sudo systemctl enable grafana-server
+
+#create a config.cfg file
+echo "
+[log]
+mode = file
+file = /var/log/mosquitto/mosquitto.log
+
+[persistence]
+log_type = disk
+log_dest = /var/log/mosquitto/mosquitto.db
+
+[acl_file]
+user_file = /etc/mosquitto/users.txt
+
+[password_file]
+user_file = /etc/mosquitto/pwfile.txt
+
+[listener]
+port = 1883
+protocol = mqtt
+
+[listener]
+port = 8883
+protocol = mqtts
+certfile = /etc/letsencrypt/live/yourdomain.com/fullchain.pem
+cafile = /etc/letsencrypt/live/yourdomain.com/chain.pem
+keyfile = /etc/letsencrypt/live/yourdomain.com/privkey.pem
+
+sudo mv config.cfg /etc/mosquitto/config.cfg
