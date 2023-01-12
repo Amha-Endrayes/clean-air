@@ -1,1 +1,2 @@
-This dir contains ESP8266 Firmware and other related configration files
+## Description
+This directory contains ESP8266 Firmware and other related configration files
