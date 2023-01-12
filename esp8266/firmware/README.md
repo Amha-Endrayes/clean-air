@@ -84,7 +84,7 @@ To do
 Credits
 -------
 
-Written by Jonathan Oxer for www.superhouse.tv  
+Based on the work done by Jonathan Oxer for www.superhouse.tv  
 https://github.com/superhouse/AQS
 
 Inspired by https://github.com/SwapBap/WemosDustSensor
